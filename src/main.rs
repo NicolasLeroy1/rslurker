@@ -1,4 +1,5 @@
 use std::io;
+use std::hash::Hash;
 
 fn main() {
     println!("Hello, world!");
@@ -7,13 +8,20 @@ fn main() {
 
 pub struct World {
     name: String,
-    age: u32,
+    age: u64,
     continents: Vec<Continent>,
 }
 
 pub struct Continent {
     name: String,
     regions: Vec<Region>,
+    height: ContinentHeight,
+}
+
+enum ContinentHeight {
+    Underground,
+    SeaLevel,
+    Flying,
 }
 
 pub struct Region {
@@ -33,8 +41,6 @@ enum Topography {
     Plains,
     Hills,
     Mountains,
-    Undergrounds,
-    FloatingIslands,
 }
 
 enum Climate {
@@ -51,29 +57,36 @@ enum Location {
         size: TownSize,
         race: Race,
     },
-    Altar{flux: Flux},
-    Lair,
-    Ruin,
-    Graveyard,
+    Altar{flux:Flux},
+    Lair{entity:Entity},
+    Ruin{race:Race},
+    Graveyard{race:Race},
 }
 
-enum Race {
-    Leafkin,
-    Earthborns,
-    Gravewalkers,
-    Stargazers,
-    Seakeepers,
-    Fieldfolk,
+struct Entity {
+    name: char,
+
+}
+struct Race {
+    name: String,
+    alignment: Alignment,
+    favourite_biome: Biome,
 }
 
 enum TownSize {
     Hamlet,
     Town,
     City,
+    Metropolis,
 }
 
-enum Flux {
-    Genesis(u8),
-    Change(u8),
-    Destruction(u8),
+struct Alignment {
+    flux : Flux,
+    intensity : u8,
 }
+enum Flux {
+    Genesis,
+    Change,
+    Destruction,
+}
+
