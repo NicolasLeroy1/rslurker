@@ -2,7 +2,7 @@ use std::io;
 use std::hash::Hash;
 
 fn main() {
-    println!("Hello, world!");
+
 }
 
 
@@ -33,7 +33,6 @@ pub struct Region {
 pub struct Biome {
     topography: Topography,
     climate: Climate,
-    flux: Flux,
 }
 
 enum Topography {
@@ -57,19 +56,20 @@ enum Location {
         size: TownSize,
         race: Race,
     },
-    Altar{flux:Flux},
-    Lair{entity:Entity},
+    Church{god:God},
+    PrimalAltar,
     Ruin{race:Race},
-    Graveyard{race:Race},
 }
 
+struct God{
+    name: String,
+}
 struct Entity {
     name: char,
 
 }
 struct Race {
     name: String,
-    alignment: Alignment,
     favourite_biome: Biome,
 }
 
@@ -80,13 +80,20 @@ enum TownSize {
     Metropolis,
 }
 
-struct Alignment {
-    flux : Flux,
-    intensity : u8,
+
+
+enum MaterialType{
+    Wood,
+    Stone,
+    Metal,
+    Food,
+    MagicStone,
 }
-enum Flux {
-    Genesis,
-    Change,
-    Destruction,
+
+enum MaterialTier{
+    Poor,
+    Basic,
+    Fine,
+    Exquisite,
 }
 
