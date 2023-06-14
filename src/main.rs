@@ -95,6 +95,19 @@ enum Culture {
     Deceptive,
 }
 
+enum ActionType{
+    Fight,
+    Charm,
+    Seek,
+    Work,
+}
+
+enum RessourceType{
+    Influence,
+    Information,
+    Materials,
+}
+
 
 enum TownSize {
     Hamlet,
