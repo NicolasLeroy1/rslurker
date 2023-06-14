@@ -7,7 +7,7 @@ fn main() {
     world.continents.push(Continent{name: String::from("UndergroundContinent"), regions: Vec::new(), height: ContinentHeight::Underground});
     world.continents.push(Continent{name: String::from("FlyingContinent"), regions: Vec::new(), height: ContinentHeight::Flying});  
     world.continents[0].regions.push(Region{name: String::from("Region1"), locations: Vec::new(), biome: Biome{topography: Topography::Coastal, climate: Climate::Temperate}});
-    world.continents[0].regions.push(Region{name: String::from("Region2"), locations: Vec::new(), biome: Biome{topography: Topography::Plains, climate: Climate::Warm}});
+    world.continents[0].regions.push(Region{name: String::from("Region2"), locations: Vec::new(), biome: Biome{topography: Topography::Plains, climate: Climate::Scorching}});
 
 
     println!("In the world of {} there are {} continents", world.name, world.continents.len());
@@ -56,9 +56,7 @@ enum Topography {
 
 enum Climate {
     Arctic,
-    Cold,
     Temperate,
-    Warm,
     Scorching,
 }
 
@@ -66,11 +64,11 @@ enum Location {
     Town{
         name: String,
         size: TownSize,
-        race: Race,
+        tribe: Tribe,
     },
     Church{god:God},
     PrimalAltar,
-    Ruin{race:Race},
+    Ruin{tribe:Tribe},
 }
 
 struct God{
@@ -83,6 +81,20 @@ enum Race {
     Orcs,
     Avians,
 }
+
+struct Tribe {
+    name : String,
+    race : Race,
+    culture : Culture,
+}
+
+enum Culture {
+    Bellicist,
+    Mercantile,
+    Industrious,
+    Deceptive,
+}
+
 
 enum TownSize {
     Hamlet,
