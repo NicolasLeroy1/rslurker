@@ -102,12 +102,11 @@ enum ActionType{
     Work,
 }
 
-enum RessourceType{
-    Influence,
-    Information,
-    Materials,
+struct PlayerRessources{
+    Influence : i64,
+    Secrets : i64,
+    Materials : i64,
 }
-
 
 enum TownSize {
     Hamlet,
