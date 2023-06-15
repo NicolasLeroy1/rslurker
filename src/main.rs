@@ -1,23 +1,36 @@
 use std::io;
-use std::hash::Hash;
+use std::collections::HashMap;
 
 fn main() {
-    let mut world = World{name: String::from("Altiria"), age: 0, continents: Vec::new()};
-    world.continents.push(Continent{name: String::from("SeaLevelContinent"), regions: Vec::new(), height: ContinentHeight::SeaLevel});
-    world.continents.push(Continent{name: String::from("UndergroundContinent"), regions: Vec::new(), height: ContinentHeight::Underground});
-    world.continents.push(Continent{name: String::from("FlyingContinent"), regions: Vec::new(), height: ContinentHeight::Flying});  
-    world.continents[0].regions.push(Region{name: String::from("Region1"), locations: Vec::new(), biome: Biome{topography: Topography::Coastal, climate: Climate::Temperate}});
-    world.continents[0].regions.push(Region{name: String::from("Region2"), locations: Vec::new(), biome: Biome{topography: Topography::Plains, climate: Climate::Scorching}});
-
-
-    println!("In the world of {} there are {} continents", world.name, world.continents.len());
-
-    for continent in &world.continents {
-        println!("The continent of {} has {} regions", continent.name, continent.regions.len());
-    }
-
+ let mut game_state = GameState::Start;
 }
 
+
+enum GameState {
+    Start,
+    SaveAndLoad{world: World, player: Player},
+    WorldAwait{world: World, player: Player},
+    WorldSimulation{world: World, player: Player},
+}
+
+struct Player {
+    name: String,
+}
+
+struct Pawn {
+    name: String,
+    pawn_type: PawnType,
+    traits: Vec<PawnTrait>,
+}
+
+enum PawnTrait {
+}
+
+enum PawnType {
+    Summon{skill : HashMap<ActionType,u8>},
+    Creature(Creature),
+    Follower{tribe:Tribe, action_type:ActionType},
+}
 pub struct World {
     name: String,
     age: u64,
@@ -31,9 +44,10 @@ pub struct Continent {
 }
 
 enum ContinentHeight {
-    Underground,
-    SeaLevel,
-    Flying,
+    Undergound,
+    Abyssal,
+    Celestial,
+    Ground,
 }
 
 pub struct Region {
@@ -67,19 +81,32 @@ enum Location {
         tribe: Tribe,
     },
     Church{god:God},
-    PrimalAltar,
+    Lair{creature : Creature},
     Ruin{tribe:Tribe},
+}
+enum Creature {
+    Dragon,
+    Spider,
+    Bear,
+    Wolf,
+    Snake,
+    Troll,
+    Spirit,
 }
 
 struct God{
     name: String,
 }
 
-enum Race {
-    Elves,
-    Dwarves,
-    Orcs,
-    Avians,
+enum Race{
+    Elf,
+    Orc,
+    Naga,
+    Atlantean,
+    Angel,
+    Demon,
+    Dwarf,
+    Goblin,
 }
 
 struct Tribe {
@@ -96,10 +123,10 @@ enum Culture {
 }
 
 enum ActionType{
-    Fight,
     Charm,
-    Seek,
+    Fight,
     Work,
+    Investigate,
 }
 
 struct PlayerRessources{
