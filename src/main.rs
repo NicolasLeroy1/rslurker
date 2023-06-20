@@ -1,35 +1,86 @@
-use std::io;
 use std::collections::HashMap;
+use std::io;
 
 fn main() {
- let mut game_state = GameState::Start;
+    let mut game = Game::Start;
+    run(&mut game);
 }
 
+pub fn run(game: &mut Game) {
+    loop {
+        match game {
+            Game::Start => {
+                // Handle start state
+            }
+            Game::Loading {
+                player,
+                config,
+                filepath,
+            } => {
+                // Handle loading state
+            }
+            Game::PlayerTurn {
+                world,
+                player,
+                config,
+            } => {
+                // Handle player turn
+            }
+            Game::Simulation {
+                world,
+                player,
+                config,
+            } => {
+                // Handle simulation
+            }
+        }
+    }
+}
 
-enum GameState {
+pub enum Game {
     Start,
-    SaveAndLoad{world: World, player: Player},
-    WorldAwait{world: World, player: Player},
-    WorldSimulation{world: World, player: Player},
+    Loading {
+        player: Player,
+        config: Config,
+        filepath: String,
+    },
+    PlayerTurn {
+        world: World,
+        player: Player,
+        config: Config,
+    },
+    Simulation {
+        world: World,
+        player: Player,
+        config: Config,
+    },
 }
 
-struct Player {
+pub struct Config {
+    seed: u64,
+}
+
+pub struct Player {
     name: String,
 }
 
-struct Pawn {
+pub struct Pawn {
     name: String,
     pawn_type: PawnType,
     traits: Vec<PawnTrait>,
 }
 
-enum PawnTrait {
-}
+pub enum PawnTrait {}
 
-enum PawnType {
-    Summon{skill : HashMap<ActionType,u8>},
+pub enum PawnType {
+    Summon {
+        skill: HashMap<ActionType, u8>,
+    },
     Creature(Creature),
-    Follower{tribe:Tribe, action_type:ActionType},
+    Follower {
+        tribe: Tribe,
+        action_type: ActionType,
+    },
 }
 pub struct World {
     name: String,
@@ -43,7 +94,7 @@ pub struct Continent {
     height: ContinentHeight,
 }
 
-enum ContinentHeight {
+pub enum ContinentHeight {
     Undergound,
     Abyssal,
     Celestial,
@@ -61,30 +112,36 @@ pub struct Biome {
     climate: Climate,
 }
 
-enum Topography {
+pub enum Topography {
     Coastal,
     Plains,
     Hills,
     Mountains,
 }
 
-enum Climate {
+pub enum Climate {
     Arctic,
     Temperate,
     Scorching,
 }
 
 enum Location {
-    Town{
+    Town {
         name: String,
         size: TownSize,
         tribe: Tribe,
     },
-    Church{god:God},
-    Lair{creature : Creature},
-    Ruin{tribe:Tribe},
+    Church {
+        god: God,
+    },
+    Lair {
+        creature: Creature,
+    },
+    Ruin {
+        tribe: Tribe,
+    },
 }
-enum Creature {
+pub enum Creature {
     Dragon,
     Spider,
     Bear,
@@ -94,11 +151,11 @@ enum Creature {
     Spirit,
 }
 
-struct God{
+pub struct God {
     name: String,
 }
 
-enum Race{
+pub enum Race {
     Elf,
     Orc,
     Naga,
@@ -109,37 +166,35 @@ enum Race{
     Goblin,
 }
 
-struct Tribe {
-    name : String,
-    race : Race,
-    culture : Culture,
+pub struct Tribe {
+    name: String,
+    race: Race,
+    culture: Culture,
 }
 
-enum Culture {
-    Bellicist,
+pub enum Culture {
     Mercantile,
+    Bellicist,
     Industrious,
     Deceptive,
 }
 
-enum ActionType{
+pub enum ActionType {
     Charm,
     Fight,
     Work,
     Investigate,
 }
 
-struct PlayerRessources{
-    Influence : i64,
-    Secrets : i64,
-    Materials : i64,
+pub struct PlayerRessources {
+    influence: i64,
+    secrets: i64,
+    materials: i64,
 }
 
-enum TownSize {
+pub enum TownSize {
     Hamlet,
     Town,
     City,
     Metropolis,
 }
-
-
